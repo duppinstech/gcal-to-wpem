@@ -1,0 +1,14 @@
+{
+    "name": "duppins/gcal-to-wpem",
+    "version": "0.1.0",
+    "description": "WordPress plugin: import Google Calendar (iCal) into WP Event Manager listings.",
+    "type": "wordpress-plugin",
+    "license": "GPL-2.0-or-later",
+    "require": {
+        "php": ">=7.4",
+        "sabre/vobject": "^4.5"
+    },
+    "config": {
+        "sort-packages": true
+    }
+}

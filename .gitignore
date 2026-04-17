@@ -1,0 +1,70 @@
+# Composer dependencies — run `composer install` after clone (see README)
+/vendor/
+
+# Composer local config (may contain HTTP basic auth / private repo tokens)
+/auth.json
+
+# Environment and secrets (never commit)
+.env
+.env.*
+!.env.example
+*.pem
+*.p12
+*.key
+secrets/
+certs/
+
+# WordPress / local overrides (if you develop inside a full WP tree)
+wp-config.php
+wp-config-local.php
+local-config.php
+
+# Operating system
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Editors & IDEs
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+.project
+.settings/
+
+# Logs and debug output
+*.log
+npm-debug.log*
+yarn-error.log*
+error_log
+debug.log
+
+# Node (if you add frontend tooling later)
+node_modules/
+
+# Cache & temp
+.cache/
+*.tmp
+*.temp
+.phpunit.result.cache
+phpunit.xml
+/coverage/
+
+# Distribution / local archives
+*.zip
+*.tar.gz
+
+# Backups & merge artifacts
+*.bak
+*.orig
+*.rej
+
+# Personal / machine-specific
+*.local
+.local/
+scratch/
+notes-private/
+
+# Optional: OS-generated in OneDrive / cloud sync (uncomment if needed)
+# ~$*

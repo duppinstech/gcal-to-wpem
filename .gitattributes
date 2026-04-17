@@ -1,0 +1,16 @@
+# Normalize line endings for text files
+* text=auto eol=lf
+
+*.php text diff=php
+*.md text diff=markdown
+*.json text
+*.lock text
+
+# Archives / binary
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.ico binary
+*.woff binary
+*.woff2 binary
