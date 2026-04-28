@@ -210,7 +210,15 @@ class PendingDigest {
                         ?>
                         <li>
                             <strong><?php echo esc_html($title !== '' ? $title : __('(untitled series)', 'gcal-to-wpem')); ?></strong>
-                            — <?php echo esc_html(sprintf(_n('%d occurrence', '%d occurrences', $cnt, 'gcal-to-wpem'), $cnt)); ?>
+                            — <?php
+                            echo esc_html(
+                                sprintf(
+                                    /* translators: %d: number of occurrences */
+                                    _n('%d occurrence', '%d occurrences', $cnt, 'gcal-to-wpem'),
+                                    $cnt
+                                )
+                            );
+                            ?>
                         </li>
                     <?php endforeach; ?>
                 </ul>

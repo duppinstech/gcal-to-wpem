@@ -40,6 +40,33 @@ class Settings {
         add_filter('wp_redirect', [self::class, 'preserve_settings_tab_redirect'], 10, 2);
     }
 
+    protected static function get_query_string(string $key): string {
+        $value = filter_input(INPUT_GET, $key, FILTER_UNSAFE_RAW);
+        if (!is_string($value)) {
+            return '';
+        }
+
+        return sanitize_text_field(wp_unslash($value));
+    }
+
+    protected static function get_query_int(string $key): int {
+        $value = filter_input(INPUT_GET, $key, FILTER_UNSAFE_RAW);
+        if (!is_scalar($value)) {
+            return 0;
+        }
+
+        return absint((string) $value);
+    }
+
+    protected static function get_post_string(string $key): string {
+        $value = filter_input(INPUT_POST, $key, FILTER_UNSAFE_RAW);
+        if (!is_string($value)) {
+            return '';
+        }
+
+        return sanitize_text_field(wp_unslash($value));
+    }
+
     /**
      * Adds a short “Google Cal” tab on WP Event Manager → Settings linking to the full Import screen.
      * Full import UI stays on its own page so admin-post actions are not nested inside WPEM’s options form.
@@ -75,15 +102,18 @@ class Settings {
         if ($pagenow !== 'options-general.php') {
             return;
         }
-        if (empty($_GET['page']) || sanitize_key(wp_unslash((string) $_GET['page'])) !== 'gcal-wpem') {
+        if (sanitize_key(self::get_query_string('page')) !== 'gcal-wpem') {
             return;
         }
         if (!current_user_can('manage_options')) {
             return;
         }
-        $q = wp_unslash($_GET);
-        unset($q['page']);
-        wp_safe_redirect(self::admin_page_url($q));
+        $query = [];
+        $tab   = sanitize_key(self::get_query_string('gcal_tab'));
+        if ($tab !== '') {
+            $query['gcal_tab'] = $tab;
+        }
+        wp_safe_redirect(self::admin_page_url($query));
         exit;
     }
 
@@ -127,13 +157,14 @@ class Settings {
      */
     public static function preserve_settings_tab_redirect($location, int $status = 302): string {
         unset($status); // Redirect status code from core; not used here.
-        if (empty($_POST['gcal_wpem_active_tab']) || !is_string($location)) {
+        $posted_tab = self::get_post_string('gcal_wpem_active_tab');
+        if ($posted_tab === '' || !is_string($location)) {
             return $location;
         }
         if (strpos($location, 'page=gcal-wpem') === false) {
             return $location;
         }
-        $tab = sanitize_key(wp_unslash((string) $_POST['gcal_wpem_active_tab']));
+        $tab = sanitize_key($posted_tab);
         if ($tab === '' || !in_array($tab, ['import', 'advanced', 'recurring', 'logging'], true)) {
             return $location;
         }
@@ -205,7 +236,7 @@ class Settings {
             return;
         }
 
-        if (empty($_GET['gcal_wpem_manual_listing_fill'])) {
+        if (self::get_query_string('gcal_wpem_manual_listing_fill') === '') {
             return;
         }
 
@@ -214,8 +245,8 @@ class Settings {
             return;
         }
 
-        $u = isset($_GET['u']) ? absint($_GET['u']) : 0;
-        $s = isset($_GET['s']) ? absint($_GET['s']) : 0;
+        $u = self::get_query_int('u');
+        $s = self::get_query_int('s');
 
         echo '<div class="notice notice-success is-dismissible"><p>';
         echo esc_html(
@@ -230,7 +261,7 @@ class Settings {
     }
 
     public static function maybe_clear_logs(): void {
-        if (!isset($_POST['clear_logs'])) {
+        if (self::get_post_string('clear_logs') === '') {
             return;
         }
 
@@ -696,8 +727,8 @@ JS;
                         for ($h = 0; $h < 24; $h++) {
                             $label = wp_date($fmt, $base->setTime($h, 0, 0)->getTimestamp());
                             printf(
-                                '<option value="%d"%s>%s</option>',
-                                $h,
+                                '<option value="%s"%s>%s</option>',
+                                esc_attr((string) $h),
                                 selected($hour, $h, false),
                                 esc_html($label)
                             );
@@ -738,8 +769,8 @@ JS;
                                     $ih
                                 );
                             printf(
-                                '<option value="%d" %s>%s</option>',
-                                $ih,
+                                '<option value="%s" %s>%s</option>',
+                                esc_attr((string) $ih),
                                 selected($interval, $ih, false),
                                 esc_html($lab)
                             );
@@ -924,26 +955,27 @@ JS;
     }
 
     public static function render_page(): void {
-        if (!empty($_GET['backfilled'])) {
-            $n = isset($_GET['n']) ? absint($_GET['n']) : 0;
+        if (self::get_query_string('backfilled') !== '') {
+            $n = self::get_query_int('n');
             echo '<div class="notice notice-success is-dismissible"><p>' . esc_html(
                 sprintf('Backfill finished. Updated %d event listing(s).', $n)
             ) . '</p></div>';
         }
 
-        if (isset($_GET['test'])) {
-            if ($_GET['test'] === 'success') {
+        $test_status = self::get_query_string('test');
+        if ($test_status !== '') {
+            if ($test_status === 'success') {
                 echo '<div class="notice notice-success is-dismissible"><p>' . esc_html('Dry run finished. Preview below (no events were saved).') . '</p></div>';
-            } elseif ($_GET['test'] === 'fail') {
+            } elseif ($test_status === 'fail') {
                 echo '<div class="notice notice-error is-dismissible"><p>' . esc_html('Dry run failed. Check the import log below for details.') . '</p></div>';
             }
         }
 
-        if (isset($_GET['series'])) {
-            $s = sanitize_text_field(wp_unslash((string) $_GET['series']));
+        $s = self::get_query_string('series');
+        if ($s !== '') {
             if ($s === 'approved') {
-                $i = isset($_GET['i']) ? absint($_GET['i']) : 0;
-                $m = isset($_GET['m']) ? absint($_GET['m']) : 0;
+                $i = self::get_query_int('i');
+                $m = self::get_query_int('m');
                 echo '<div class="notice notice-success is-dismissible"><p>' . esc_html(
                     sprintf('Series approved. Imported %d occurrence(s); %d were not found in the current feed.', $i, $m)
                 ) . '</p></div>';
@@ -958,7 +990,7 @@ JS;
             } elseif ($s === 'reject_fail') {
                 echo '<div class="notice notice-error is-dismissible"><p>' . esc_html('Could not reject that series (invalid id or not in queue).') . '</p></div>';
             } elseif ($s === 'trashed') {
-                $n = isset($_GET['n']) ? absint($_GET['n']) : 0;
+                $n = self::get_query_int('n');
                 echo '<div class="notice notice-success is-dismissible"><p>' . esc_html(
                     sprintf(
                         'Moved %d listing(s) to the trash and blacklisted that series so sync will not recreate them until you allow the series again.',
@@ -976,7 +1008,7 @@ JS;
             } elseif ($s === 'media_save_fail') {
                 echo '<div class="notice notice-error is-dismissible"><p>' . esc_html__('Could not save series banner (invalid series or not in queue).', 'gcal-to-wpem') . '</p></div>';
             } elseif ($s === 'imported_banner_ok') {
-                $n = isset($_GET['n']) ? absint($_GET['n']) : 0;
+                $n = self::get_query_int('n');
                 echo '<div class="notice notice-success is-dismissible"><p>' . esc_html(
                     sprintf(
                         /* translators: %d: listings updated */
@@ -994,7 +1026,10 @@ JS;
             }
         }
 
-        $gcal_cur_tab = isset($_GET['gcal_tab']) ? sanitize_key(wp_unslash((string) $_GET['gcal_tab'])) : 'import';
+        $gcal_cur_tab = sanitize_key(self::get_query_string('gcal_tab'));
+        if ($gcal_cur_tab === '') {
+            $gcal_cur_tab = 'import';
+        }
         if (!in_array($gcal_cur_tab, ['import', 'advanced', 'recurring', 'logging'], true)) {
             $gcal_cur_tab = 'import';
         }
@@ -1114,7 +1149,12 @@ JS;
                         $ban_url = ($bid > 0 && wp_attachment_is_image($bid)) ? (wp_get_attachment_image_url($bid, 'thumbnail') ?: '') : '';
 
                         echo '<tr><td><strong>' . esc_html($title) . '</strong><br />';
-                        echo '<span class="description">' . esc_html(sprintf(/* translators: %d: count */ _n('%d occurrence', '%d occurrences', $cnt, 'gcal-to-wpem'), $cnt)) . '</span></td>';
+                        $occurrence_label = sprintf(
+                            /* translators: %d: occurrence count in a recurring series */
+                            _n('%d occurrence', '%d occurrences', $cnt, 'gcal-to-wpem'),
+                            $cnt
+                        );
+                        echo '<span class="description">' . esc_html($occurrence_label) . '</span></td>';
                         echo '<td>' . esc_html((string) $detl) . '</td>';
 
                         echo '<td><div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;">';
@@ -1245,7 +1285,11 @@ JS;
                     'gcal-to-wpem'
                 ) . '</p>';
                 echo '<div style="max-height:300px;overflow:auto;background:#fff;padding:10px;border:1px solid #c3c4c7;">';
-                echo '<pre style="margin:0;white-space:pre-wrap;word-break:break-word;">' . esc_html(print_r(array_slice($test, 0, 10), true)) . '</pre>';
+                $preview = wp_json_encode(array_slice($test, 0, 10), JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES);
+                if (!is_string($preview) || $preview === '') {
+                    $preview = '[]';
+                }
+                echo '<pre style="margin:0;white-space:pre-wrap;word-break:break-word;">' . esc_html($preview) . '</pre>';
                 echo '</div>';
             }
 

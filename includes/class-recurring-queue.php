@@ -828,9 +828,11 @@ class RecurringQueue {
             LIMIT 200
         ";
 
-        // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared -- placeholders below.
-        $prepared = $wpdb->prepare($sql, '_gcal_series_id', 'event_listing');
-        $rows     = $wpdb->get_results($prepared, ARRAY_A);
+        // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery,WordPress.DB.DirectDatabaseQuery.NoCaching -- summary query for admin table.
+        $rows = $wpdb->get_results(
+            $wpdb->prepare($sql, '_gcal_series_id', 'event_listing'),
+            ARRAY_A
+        );
 
         if (!is_array($rows)) {
             return [];

@@ -152,7 +152,7 @@ class Importer {
             AND (m2.meta_id IS NULL OR TRIM(m2.meta_value) = '')
         ";
 
-        // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared -- placeholders match $statuses.
+        // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared,WordPress.DB.DirectDatabaseQuery.DirectQuery,WordPress.DB.DirectDatabaseQuery.NoCaching -- bounded count query with prepared placeholders.
         $count = $wpdb->get_var($wpdb->prepare($sql, $statuses));
 
         return is_numeric($count) ? (int) $count : 0;

@@ -31,7 +31,7 @@ class Parser
             /** @var VCalendar $vcalendar */
             $vcalendar = VObject\Reader::read($ics);
         } catch (\Throwable $e) {
-            error_log('GCAL_WPEM parser read error: ' . $e->getMessage());
+            Plugin::log('Parser read error: ' . $e->getMessage());
             return [];
         }
 
@@ -46,7 +46,7 @@ class Parser
         try {
             $expanded = $vcalendar->expand($rangeStart, $rangeEnd);
         } catch (\Throwable $e) {
-            error_log('GCAL_WPEM recurrence expansion error: ' . $e->getMessage());
+            Plugin::log('Recurrence expansion error: ' . $e->getMessage());
             $expanded = $vcalendar;
         }
 

@@ -1,10 +1,10 @@
 <?php
 /**
- * Plugin Name: WP Event Manager - Gcal Importer
+ * Plugin Name: WP Event Manager Gcal Importer
  * Description: Imports Google Calendar events into WP Event Manager via iCal.
  * Version: 0.1.0
  * Author: Duppins Technology
- * License: GPL v2 or later
+ * License: GPL-2.0-or-later
  * License URI: https://www.gnu.org/licenses/gpl-2.0.html
  * Requires Plugins: wp-event-manager
  */
