@@ -68,3 +68,16 @@ notes-private/
 
 # Optional: OS-generated in OneDrive / cloud sync (uncomment if needed)
 # ~$*
+
+# Build output
+dist/
+build/
+
+# Python leftovers
+__pycache__/
+.venv/
+
+# Local AI assistant overrides
+CLAUDE.local.md
+.claude/settings.local.json
+.claude/worktrees/
