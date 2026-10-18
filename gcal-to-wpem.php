@@ -36,6 +36,15 @@ GCAL_WPEM_GitHub_Updater::boot([
     'prefix'  => 'gcal_wpem',
 ]);
 
+require_once GCAL_WPEM_PATH . 'includes/class-gcal-to-wpem-plugin-info.php';
+
+GCAL_WPEM_Plugin_Info::boot([
+    'file'         => __FILE__,
+    'settings_url' => 'edit.php?post_type=event_listing&page=gcal-wpem',
+    'help_url'     => '',
+    'support_url'  => 'mailto:support@duppinstech.com',
+]);
+
 /**
  * Bootstrap after other plugins so WP Event Manager can load first.
  */
