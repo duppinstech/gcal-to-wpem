@@ -23,6 +23,21 @@ Develop inside a WordPress install with **WP Event Manager** enabled; place or s
 - Escape output and sanitize input; use nonces and capability checks for admin actions.
 - Avoid unrelated refactors in the same PR as a bugfix or feature.
 
+## Branch naming
+
+Branch from `main` using `type/short-description`:
+
+- `feat/` for a new capability
+- `fix/` for a bug fix
+- `docs/` for documentation
+- `chore/` for maintenance that does not change plugin behavior
+
+## Commit style
+
+Use [Conventional Commits](https://www.conventionalcommits.org/): `type: summary`.
+
+Types: `feat`, `fix`, `docs`, `test`, `ci`, `chore`. Keep each commit focused on one change.
+
 ## License
 
 By contributing, you agree your contributions are licensed under the same terms as the project ([GPL-2.0-or-later](LICENSE)).

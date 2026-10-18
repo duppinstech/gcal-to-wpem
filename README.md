@@ -85,3 +85,11 @@ Dependencies (e.g. sabre/vobject) remain under their respective licenses.
 ## Contributing
 
 See [CONTRIBUTING.md](CONTRIBUTING.md).
+
+## Tests
+
+```bash
+composer test
+```
+
+PHPUnit runs the suite in `tests/`. This project has no lint command.
