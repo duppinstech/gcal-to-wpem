@@ -68,6 +68,13 @@ You can import every event, skip repeating events, or hold each repeating series
 
 The site administrator email address. The message is sent once a day at 4:00 p.m. site time, and only when a repeating series or an event listing is waiting for approval.
 
+== Screenshots ==
+
+1. Import settings: the iCal address, listing status, title option, and automatic sync schedule.
+2. Advanced defaults used when the feed leaves out a location, postal code, country, venue, or organizer.
+3. Repeating events can be imported, skipped, or held for approval, with a default event image.
+4. The import log before any sync has run.
+
 == Changelog ==
 
 = 0.1.0 =
