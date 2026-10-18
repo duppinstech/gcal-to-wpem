@@ -1,0 +1,39 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - "v*"
+
+permissions:
+  contents: write
+
+jobs:
+  package:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: "8.2"
+          coverage: none
+
+      - name: Install production dependencies
+        run: composer install --no-dev --optimize-autoloader --no-interaction
+
+      - name: Build plugin zip
+        run: |
+          mkdir -p build
+          zip -r build/gcal-to-wpem.zip . \
+            -x "*.git*" \
+            -x ".github/*" \
+            -x ".claude/*" \
+            -x "tests/*" \
+            -x "build/*" \
+            -x "*.zip"
+
+      - name: Publish GitHub release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh release create "${{ github.ref_name }}" build/gcal-to-wpem.zip --title "${{ github.ref_name }}" --generate-notes
