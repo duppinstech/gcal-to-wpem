@@ -3,7 +3,7 @@
  * Plugin Name: WP Event Manager Gcal Importer
  * Plugin URI: https://github.com/duppinstech/gcal-to-wpem
  * Description: Imports Google Calendar events into WP Event Manager via iCal.
- * Version: 0.1.0
+ * Version: 0.1.1
  * Requires at least: 6.5
  * Requires PHP: 7.4
  * Author: Duppins Technology
@@ -19,7 +19,7 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
-define('GCAL_WPEM_VERSION', '0.1.0');
+define('GCAL_WPEM_VERSION', '0.1.1');
 define('GCAL_WPEM_PATH', plugin_dir_path(__FILE__));
 define('GCAL_WPEM_URL', plugin_dir_url(__FILE__));
 define('GCAL_WPEM_BASENAME', plugin_basename(__FILE__));

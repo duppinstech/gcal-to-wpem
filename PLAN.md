@@ -1,6 +1,6 @@
 # Plan
 
-Current version: **0.1.0** (see `composer.json`).
+Current version: **0.1.1** (see `composer.json`).
 
 ## Now
 

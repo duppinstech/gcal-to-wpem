@@ -4,7 +4,7 @@ _Shared, committed memory. Keep it factual and current. If the repo is public, s
 
 - **Product:** WP Event Manager Gcal Importer, a WordPress plugin. Owner: Odell Duppins Jr / Duppins Technology.
 - **Repo:** https://github.com/duppinstech/gcal-to-wpem (public). Git `origin` is `https://github.com/oduppinsjr/gcal-to-wpem.git`.
-- **Current release:** `v0.1.0`, annotated tag dated 2026-10-18. `CHANGELOG.md` dates 0.1.0 as 2026-04-28.
+- **Current release:** `v0.1.1`, tagged 2026-10-18. `v0.1.0` was tagged the same day; `CHANGELOG.md` dates 0.1.0 as 2026-04-28.
 - **Distribution:** GitHub Releases. Sites update through `GCAL_WPEM_GitHub_Updater`. `release.yml` publishes `gcal-to-wpem.zip` on `v*` tags.
 - **Key dependencies:** PHP >=7.4, WordPress 6.5, WP Event Manager, `sabre/vobject` ^4.5. Dev: `phpunit/phpunit` ^9.6.
 - **Integrations:** HTTP GET of the Google Calendar iCal URL stored in settings. GitHub latest-release API for updates.

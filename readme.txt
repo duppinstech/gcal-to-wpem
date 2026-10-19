@@ -4,7 +4,7 @@ Tags: events, calendar, ical, wp-event-manager, import
 Requires at least: 6.5
 Tested up to: 6.9
 Requires PHP: 7.4
-Stable tag: 0.1.0
+Stable tag: 0.1.1
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -77,10 +77,16 @@ The site administrator email address. The message is sent once a day at 4:00 p.m
 
 == Changelog ==
 
+= 0.1.1 =
+* No change to how events are imported. This release records the project scaffold in the repository.
+
 = 0.1.0 =
 * Initial release: import Google Calendar iCal feeds into WP Event Manager listings.
 
 == Upgrade Notice ==
+
+= 0.1.1 =
+No change to how events are imported.
 
 = 0.1.0 =
 Initial release.
