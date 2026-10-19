@@ -31,7 +31,7 @@ Import events from **Google Calendar** (public iCal/ICS URL) into **[WP Event Ma
 ### From Git (development)
 
 ```bash
-git clone https://github.com/oduppinsjr/gcal-to-wpem.git
+git clone https://github.com/duppinstech/gcal-to-wpem.git
 cd gcal-to-wpem
 composer install
 ```

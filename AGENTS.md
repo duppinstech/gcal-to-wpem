@@ -9,7 +9,7 @@ WordPress plugin (`duppins/gcal-to-wpem`). PHP 7.4+ and Composer. Production dep
 - **Prefix:** `gcal_wpem` for functions, options, nonces, cron hooks, and admin-post actions. Constants and the two global classes use `GCAL_WPEM`. Importer classes use namespace `GCAL_WPEM`.
 - **Text domain:** `gcal-to-wpem`
 - **Floor:** WordPress 6.5, PHP 7.4 (`Requires at least`, `Requires PHP`, `composer.json`)
-- **Repo:** https://github.com/duppinstech/gcal-to-wpem (public). Git `origin` is `https://github.com/oduppinsjr/gcal-to-wpem.git`.
+- **Repo:** https://github.com/duppinstech/gcal-to-wpem (public). Git `origin` is `https://github.com/duppinstech/gcal-to-wpem.git`.
 - **Updater:** `GCAL_WPEM_GitHub_Updater` in `includes/class-gcal-wpem-github-updater.php`. Booted with owner `duppinstech`, repo `gcal-to-wpem`, prefix `gcal_wpem`. Disable with `GCAL_WPEM_DISABLE_GITHUB_UPDATER`.
 - **Distribution:** GitHub Releases. `.github/workflows/release.yml` builds `gcal-to-wpem.zip` on `v*` tags.
 - **Requires:** WP Event Manager. The importer does not load when `WP_Event_Manager` is missing.
