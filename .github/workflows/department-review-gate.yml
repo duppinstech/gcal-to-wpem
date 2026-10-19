@@ -1,0 +1,33 @@
+name: Department review gate
+
+# Every PR into main must carry the /department-review sign-off table with no
+# `block` and no empty verdicts. Add the label `skip-department-review` to bypass
+# (owner's call, for trivial or release-only PRs).
+on:
+  pull_request:
+    branches: [main]
+    types: [opened, edited, synchronize, reopened, labeled, unlabeled]
+
+jobs:
+  gate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check sign-off table
+        env:
+          BODY: ${{ github.event.pull_request.body }}
+          SKIP: ${{ contains(github.event.pull_request.labels.*.name, 'skip-department-review') }}
+        run: |
+          if [ "$SKIP" = "true" ]; then echo "Skipped by label."; exit 0; fi
+          section="$(printf '%s\n' "$BODY" | awk '/^## Department review/{f=1;next} /^## /{f=0} f')"
+          [ -n "$section" ] || { echo "::error::PR body has no '## Department review' section. Run /department-review and paste the sign-off table."; exit 1; }
+          rows="$(printf '%s\n' "$section" | grep -E '^\|' | grep -viE '^\|[[:space:]]*(department|---)' || true)"
+          [ -n "$rows" ] || { echo "::error::Department review table is empty."; exit 1; }
+          empty="$(printf '%s\n' "$rows" | awk -F'|' '{gsub(/[[:space:]]/,"",$3); if ($3=="") print $2}')"
+          [ -z "$empty" ] || { echo "::error::Missing verdicts for:$empty"; exit 1; }
+          if printf '%s\n' "$rows" | awk -F'|' '{print tolower($3)}' | grep -qw block; then
+            echo "::error::A department returned 'block'. Fix it and re-review before merging."; exit 1
+          fi
+          if printf '%s\n' "$rows" | awk -F'|' '{print tolower($3)}' | grep -q 'fix-before-merge'; then
+            echo "::warning::A department said fix-before-merge. Merge only after the fixes and a re-review."
+          fi
+          echo "Department review sign-off present."

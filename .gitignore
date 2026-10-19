@@ -81,3 +81,7 @@ __pycache__/
 CLAUDE.local.md
 .claude/settings.local.json
 .claude/worktrees/
+
+# --- Duppins Technology scaffold ---
+/*.zip
+.claude/scheduled_tasks.lock
