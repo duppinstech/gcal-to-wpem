@@ -22,3 +22,10 @@ jobs:
 
       - name: Test
         run: composer test
+
+      - name: Release notes for the current version
+        shell: bash
+        run: |
+          set -euo pipefail
+          version=$(sed -n 's/^ \* Version:[[:space:]]*//p' gcal-to-wpem.php | tr -d '\r')
+          bash bin/release-notes.sh "$version" gcal-to-wpem.php "$RUNNER_TEMP/release-notes.md"
