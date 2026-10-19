@@ -1,11 +1,12 @@
 # OWNERSHIP.md
 
-Ownership notice for this repository.
+Ownership notice for this repository. Portable notice. The same file goes in every repo Odell Duppins Jr works on.
 
 ## Author and owner
 
 - **Product:** WP Event Manager Gcal Importer
 - **Author:** Odell Duppins Jr
+- **Business:** Duppins Technology (https://duppinstech.com)
 - **Owner and copyright holder:** Odell Duppins Jr, doing business as Duppins Technology (https://duppinstech.com)
 - **Support:** support@duppinstech.com
 
