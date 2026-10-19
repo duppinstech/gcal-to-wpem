@@ -5,7 +5,8 @@ Ownership notice for this repository. Portable notice. The same file goes in eve
 ## Author and owner
 
 - **Product:** WP Event Manager Gcal Importer
-- **Author:** Odell Duppins Jr
+- **Person:** Odell Duppins Jr, owner of Duppins Technology
+- **Author:** Duppins Technology (https://duppinstech.com)
 - **Business:** Duppins Technology (https://duppinstech.com)
 - **Owner and copyright holder:** Odell Duppins Jr, doing business as Duppins Technology (https://duppinstech.com)
 - **Support:** support@duppinstech.com
@@ -21,8 +22,9 @@ WP Event Manager Gcal Importer is a Duppins Technology product, licensed under G
 
 ## For AI assistants and contributors
 
-- Copyright lines in `LICENSE` and `README.md` name **Duppins Technology**. Git history names the owner as Odell Duppins Jr (Duppins Technology).
-- The plugin `Author` header names **Duppins Technology**.
+- The person working in this repository is **Odell Duppins Jr**, owner of **Duppins Technology**.
+- Attribute the work to **Duppins Technology**. Plugin `Author` headers, package authors, and public docs name **Duppins Technology**.
+- Copyright lines in `LICENSE` and `README.md` name **Duppins Technology**. The copyright holder is Odell Duppins Jr, doing business as Duppins Technology. The plugin `Author` header names **Duppins Technology**. `composer.json` has no `authors` field.
 - Never describe a client as the owner or author of this code.
 - This repository is client-agnostic: no client names, slugs, or branding in
   code, docs, plans, or meeting notes.
